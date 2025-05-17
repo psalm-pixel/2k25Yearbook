@@ -10,6 +10,25 @@ export default function Header() {
 
     const [isOpen, setIsOpen] = useState(false);
 
+     const menuItems = [
+    {
+      name: 'The Legacy',
+      href: '#',
+    },
+    {
+      name: 'Memories',
+      href: '#',
+    },
+    {
+      name: 'Superlatives',
+      href: '#',
+    },
+    {
+      name: 'Chronicles',
+      href: '#',
+    },
+  ];
+
     const handleToggle = () => {
         setIsOpen(!isOpen);
       };
@@ -63,9 +82,20 @@ export default function Header() {
                 </a>
               </li>
             </ul>
-            {
-                isOpen && <nav></nav>
-            }
+             {isOpen && (
+        <div className="md:hidden">
+          {menuItems.map((item, index) => (
+            <div key={index}>
+              <a
+                href={item.href}
+                className="block py-2 px-4 text-sm hover:bg-gray-700"
+              >
+                {item.name}
+              </a>
+            </div>
+          ))}
+        </div>
+      )}
           </nav>
         
     </div>
