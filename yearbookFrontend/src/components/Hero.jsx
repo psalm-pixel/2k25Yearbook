@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 
+
+
 export default function Hero() {
   const heroRef = useRef(null);
 
@@ -55,8 +57,9 @@ export default function Hero() {
           Oakfield Academic Set Of 2024/2025{" "}
         </h1>
         <p className="hero-subtitle text-white text-lg mb-8">
-          The Photos May Fade, But the Memories Never Will.{" "}
+          The Photos May Fade, <span className="text-[#50C878]">But the Memories Never Will.</span>{" "}
         </p>
+
         
       </div>
        <div className="absolute bottom-0 left-0 right-0 overflow-hidden pointer-events-none">
