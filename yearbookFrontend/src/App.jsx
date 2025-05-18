@@ -39,7 +39,7 @@ export default function App() {
           </div>
          
           <div className="mt-6 text-white text-xl font-semibold">Loading Yearbook...</div>
-          <div className="mt-2 text-blue-200">Please wait while we collect your memories</div>
+          <div className="mt-2 text-blue-200">Please wait while we collect memories</div>
         </div>
       )}
       
