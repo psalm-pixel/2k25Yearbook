@@ -33,7 +33,7 @@ export default function Header() {
       };
 
   return (
-    <div className='flex flex-col md:flex-row justify-between items-center p-4 font-[Quicksand] bg-slate-950 backdrop-blur-lg shadow-lg sticky top-0 z-50 text-[15px] opacity-90'>
+    <div className='flex flex-col md:flex-row justify-between items-center p-4 font-[Quicksand] bg-slate-950 backdrop-blur-lg shadow-lg fixed top-0 z-50 text-[15px] opacity-90 w-full'>
         <div className="flex flex-row items-center justify-between w-full">
 
         <h1 className='text-xl text-gray-300'><span className='text-[18px]'>2K</span><span className='text-[#50C878]'>25</span></h1>

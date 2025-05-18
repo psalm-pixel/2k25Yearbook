@@ -54,7 +54,7 @@ export default function Hero() {
       {/* Hero Content */}
       <div className="relative z-10 text-center px-4 font-[Amarante]">
         <h1 className="hero-title text-white text-2xl md:text-5xl font-bold mb-4">
-          Oakfield Academic Set Of 2024/2025{" "}
+          Oakfield Graduating Class Of 2024/2025{" "}
         </h1>
         <p className="hero-subtitle text-white text-lg mb-8">
           The Photos May Fade, <span className="text-[#50C878]">But the Memories Never Will.</span>{" "}
@@ -70,7 +70,7 @@ export default function Hero() {
           preserveAspectRatio="none"
         >
           <path
-            fill="#fff"
+            fill="#62748e"
             fillOpacity="1"
             d="M0,224L48,202.7C96,181,192,139,288,144C384,149,480,203,576,229.3C672,256,768,256,864,229.3C960,203,1056,149,1152,144C1248,139,1344,181,1392,202.7L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
           ></path>
