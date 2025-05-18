@@ -89,14 +89,14 @@ export default function YearbookTimeline() {
 
   return (
     <div className="min-h-screen font-sans p-3">
-      <header className="text-white py-8 text-center">
+      <header className="text-[#FDF6E3] py-8 text-center">
         <h1 className="text-4xl font-bold font-[Amarante] text-shadow-2xs">Echos Of Wisdom</h1>
       </header>
       
       <div className="container mx-auto px-4 py-12">
         <div className="relative" ref={timelineRef}>
           {/* Timeline center line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-[#50C878]"></div>
+          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-[#A3BFD9]"></div>
           
           {timelineItems.map((item, index) => (
             <div 
@@ -106,15 +106,15 @@ export default function YearbookTimeline() {
               }`}
             >
               {/* Year marker */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-white border-4 border-[#50C878] z-10"></div>
+              <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-[#7FB3A7] border-4 border-[#A3BFD9] z-10"></div>
               
               {/* Content container */}
               <div className="w-full md:w-5/12 mb-8 md:mb-0">
-                <div className={`bg-gray-200 font-[Quicksand] p-6 rounded-lg shadow-lg transform transition-transform duration-500 ${
+                <div className={`bg-[#FDF6E3] font-[Quicksand] p-6 rounded-lg shadow-lg transform transition-transform duration-500 ${
                   activeIndex === index ? 'scale-105' : 'scale-100'
                 }`}>
                   <h3 className="text-xl font-bold text-blue-900 mb-2">{item.name}</h3>
-                  <p className="text-gray-700 italic">"{item.quote}"</p>
+                  <p className="text-[#9bbee0] font-bold italic">"{item.quote}"</p>
                 </div>
               </div>
               

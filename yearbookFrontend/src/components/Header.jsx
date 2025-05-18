@@ -33,15 +33,15 @@ export default function Header() {
       };
 
   return (
-    <div className='flex flex-col md:flex-row justify-between items-center p-4 font-[Quicksand] bg-slate-950 backdrop-blur-lg shadow-lg fixed top-0 z-50 text-[15px] opacity-90 w-full'>
+    <div className='flex flex-col md:flex-row justify-between items-center p-4 font-[Quicksand] bg-[#FDF6E3] backdrop-blur-lg shadow-lg fixed top-0 z-50 text-[15px] opacity-95 w-full'>
         <div className="flex flex-row items-center justify-between w-full">
 
-        <h1 className='text-xl text-gray-300'><span className='text-[18px]'>2K</span><span className='text-[#50C878]'>25</span></h1>
+        <h1 className='text-xl text-[#A3BFD9] font-bold'>Class of <span className='text-[18px]'>2K</span><span className='text-[#7FB3A7]'>25</span></h1>
       {
        isOpen ? 
-       <RxCross2 className='md:hidden text-gray-300 text-2xl hover:text-[#50C878] cursor-pointer transition duration-100' onClick={handleToggle} /> 
+       <RxCross2 className='md:hidden text-[#A3BFD9] text-2xl hover:text-[#50C878] cursor-pointer transition duration-100' onClick={handleToggle} /> 
        :   
-          <FaBars className='md:hidden text-gray-300 text-2xl hover:text-[#50C878] cursor-pointer transition duration-100' onClick={handleToggle}/>
+          <FaBars className='md:hidden text-[#A3BFD9] text-2xl hover:text-[#50C878] cursor-pointer transition duration-100' onClick={handleToggle}/>
       } 
         </div>
         <nav className="flex justify-between items-center space-x-4 ">
@@ -49,38 +49,38 @@ export default function Header() {
               <li>
                 <a
                   href=""
-                  className="text-white hover:text-gray-300 text-nowrap no-underline relative group"
+                  className="text-[#A3BFD9] font-bold text-nowrap no-underline relative group"
                 >
                   The Legacy
-                  <span className="absolute left-0 right-0  h-[0.129rem] rounded mt-[21px] bg-[#50C878]  transform scale-x-0 group-hover:scale-x-100 transition-transform duration-250 ease-in-out"></span>
+                  <span className="absolute left-0 right-0  h-[0.129rem] rounded mt-[21px] bg-[#7FB3A7]  transform scale-x-0 group-hover:scale-x-100 transition-transform duration-250 ease-in-out"></span>
                 </a>
               </li>
 
               <li>
                 <a
                   href="#skills"
-                  className="text-white  no-underline relative group"
+                  className="text-[#A3BFD9] font-bold  no-underline relative group"
                 >
                   Memories 
-                  <span className="absolute left-0 right-0  h-[0.129rem] rounded mt-[21px] bg-[#50C878]  transform scale-x-0 group-hover:scale-x-100 transition-transform duration-250 ease-in-out"></span>
+                  <span className="absolute left-0 right-0  h-[0.129rem] rounded mt-[21px] bg-[#7FB3A7]  transform scale-x-0 group-hover:scale-x-100 transition-transform duration-250 ease-in-out"></span>
                 </a>
               </li>
               <li>
                 <a
                   href="#services"
-                  className="text-white  no-underline relative group"
+                  className="text-[#A3BFD9] font-bold  no-underline relative group"
                 >
                   Superlatives 
-                  <span className="absolute left-0 right-0  h-[0.129rem] rounded mt-[21px] bg-[#50C878]  transform scale-x-0 group-hover:scale-x-100 transition-transform duration-250 ease-in-out"></span>
+                  <span className="absolute left-0 right-0  h-[0.129rem] rounded mt-[21px] bg-[#7FB3A7]  transform scale-x-0 group-hover:scale-x-100 transition-transform duration-250 ease-in-out"></span>
                 </a>
               </li>
               <li>
                 <a
                   href="#contact"
-                  className="text-white hover:text-gray-300 no-underline relative group"
+                  className="text-[#A3BFD9] font-bold no-underline relative group"
                 >
-                  Chronicles
-                  <span className="absolute left-0 right-0  h-[0.129rem] rounded mt-[21px] bg-[#50C878]  transform scale-x-0 group-hover:scale-x-100 transition-transform duration-250 ease-in-out"></span>
+                  Mugshots
+                  <span className="absolute left-0 right-0  h-[0.129rem] rounded mt-[21px] bg-[#7FB3A7]  transform scale-x-0 group-hover:scale-x-100 transition-transform duration-250 ease-in-out"></span>
                 </a>
               </li>
             </ul>
@@ -90,9 +90,9 @@ export default function Header() {
             <div key={index}>
               <a
                 href={item.href}
-                className="block py-2 px-4 text-sm hover:scale-105 text-gray-300  transition duration-300"
+                className="block py-2 px-4 text-sm hover:scale-105 transition duration-300 hover:text-[#50C878]"
               >
-               <span className="text-gray-300 hover:text-[#50C878]">
+               <span className="text-[#A3BFD9] font-bold hover:text-[#50C878]">
                  {item.name}
                 </span>
               </a>

@@ -2,3 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Amarante&display=swap');
 @import "tailwindcss";
 
+:root {
+  --color-mint-500: oklch(0.72 0.11 178);
+  --color-dustyrose : #D4A5A5;
+  --color-deepBurgundy : #800020;
+  --color-antiqueCream : #FDF6E3;
+  --color-mutedTeal : #7FB3A7;
+  --color-fadedDenim : #A3BFD9;
+}
