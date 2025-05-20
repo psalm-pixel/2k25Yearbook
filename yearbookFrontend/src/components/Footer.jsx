@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Heart, BookOpen, Star, Smile, Mail } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   const [emailValue, setEmailValue] = useState('');
@@ -45,7 +46,7 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4 text-slate-500">Our Story</h3>
             <ul className="space-y-3">
               {[
-                { label: "About Our Class", href: "#" },
+                { label: "About Our Class", href: "/Legacy" },
                 { label: "Teacher Tributes", href: "#" },
                 { label: "Class Photos", href: "#" },
                 { label: "Class Mugshots", href: "#" },

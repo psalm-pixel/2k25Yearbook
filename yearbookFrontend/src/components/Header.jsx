@@ -2,7 +2,7 @@
 import { FaBars} from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
 import { useState } from 'react';
-
+import { Link } from 'react-router-dom';
 
 
 export default function Header() {
@@ -12,7 +12,7 @@ export default function Header() {
      const menuItems = [
     {
       name: 'The Legacy',
-      href: '#',
+      href: '/Legacy',
     },
     {
       name: 'Memories',
@@ -36,7 +36,9 @@ export default function Header() {
     <div className='flex flex-col md:flex-row justify-between items-center p-4 font-[Quicksand] bg-[#FDF6E3] backdrop-blur-lg shadow-lg fixed top-0 z-50 text-[15px] opacity-95 w-full'>
         <div className="flex flex-row items-center justify-between w-full">
 
-        <h1 className='text-xl text-[#A3BFD9] font-bold'>Class of <span className='text-[18px]'>2K</span><span className='text-[#7FB3A7]'>25</span></h1>
+       <Link to={'/'}>
+       <h1 className='text-xl text-[#A3BFD9] font-bold'>Class of <span className='text-[18px]'>2K</span><span className='text-[#7FB3A7]'>25</span></h1>
+       </Link> 
       {
        isOpen ? 
        <RxCross2 className='md:hidden text-[#A3BFD9] text-2xl hover:text-[#50C878] cursor-pointer transition duration-100' onClick={handleToggle} /> 
@@ -48,7 +50,7 @@ export default function Header() {
             <ul className="hidden md:flex space-x-4">
               <li>
                 <a
-                  href=""
+                 href="/Legacy"
                   className="text-[#A3BFD9] font-bold text-nowrap no-underline relative group"
                 >
                   The Legacy
