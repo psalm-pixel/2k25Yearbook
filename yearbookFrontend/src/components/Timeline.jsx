@@ -140,7 +140,7 @@ export default function YearbookTimeline() {
       
      
       
-      <style jsx>{`
+      <style jsx="true">{`
         .timeline-item {
           transform: translateY(50px);
         }

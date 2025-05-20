@@ -27,8 +27,7 @@ export default function Hero() {
         .from(".hero-title", { opacity: 0, y: 50 }, "-=0.75")
         // Animate the subtitle with a slight delay
         .from(".hero-subtitle", { opacity: 0, y: 20 }, "-=0.5")
-        // Animate the button with a popping effect
-        .from(".hero-button", { opacity: 0, scale: 0.8 }, "-=0.5")
+  
         // Optional: Log when the animation completes
         .eventCallback("onComplete", () => console.log("Animation finished"));
     }, heroRef);

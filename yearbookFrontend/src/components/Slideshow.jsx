@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import axios from 'axios';
 
 export default function Slider() {
+  
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -11,34 +13,22 @@ export default function Slider() {
   const sliderRef = useRef(null);
 
   // Sample image data - replace with your own
-  const images = [
-    {
-      src: "/api/placeholder/1200/700",
-      alt: "Senior class trip to the mountains",
-      caption: "Adventures in the great outdoors - Senior Trip 2025"
-    },
-    {
-      src: "/api/placeholder/1200/700",
-      alt: "Championship basketball game",
-      caption: "The winning moment - State Champions 2025"
-    },
-    {
-      src: "/api/placeholder/1200/700",
-      alt: "School dance",
-      caption: "Unforgettable nights - Winter Formal"
-    },
-    {
-      src: "/api/placeholder/1200/700", 
-      alt: "Graduation ceremony",
-      caption: "The beginning of new journeys - Graduation Day"
-    },
-    {
-      src: "/api/placeholder/1200/700",
-      alt: "Science fair winners",
-      caption: "Innovation and creativity - Science Fair 2025"
-    }
-  ];
-
+  
+  const [students, setStudents] = useState([]);
+  
+  useEffect(() => {
+    // Adjust the URL if your backend is running on a different host or port
+    axios.get('http://127.0.0.1:8000/images/')
+    .then(response => {
+      setStudents(response.data.results);
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+  }, []);
+  
+  const images = students || [];
+  
   // Auto-play functionality
   useEffect(() => {
     autoPlayRef.current = nextSlide;
@@ -191,9 +181,9 @@ export default function Slider() {
             {images.map((image, index) => (
               <div key={index} className="min-w-full h-full flex-shrink-0">
                 <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-full object-cover"
+                  src={image.image_url}
+                  alt={image.alt_text}
+                  className="w-full h-full object-contain object-center"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent pointer-events-none"></div>
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8">
@@ -257,7 +247,7 @@ export default function Slider() {
               }`}
             >
               <img
-                src={image.src}
+                src={image.image_url}
                 alt={`Thumbnail ${index + 1}`}
                 className="w-full h-full object-cover"
               />
