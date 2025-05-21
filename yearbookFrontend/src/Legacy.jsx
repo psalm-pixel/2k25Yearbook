@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Search } from 'lucide-react';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -90,7 +90,60 @@ const students = [
 export default function YearbookPage() {
 
       const [loading, setLoading] = useState(true);
+      const [animate, setAnimate] = useState(false);
+      const [searchTerm, setSearchTerm] = useState('');
+      const [visibleCards, setVisibleCards] = useState({});
+      const cardRefs = useRef([]);
+  
+      const filteredStudents = students.filter(student => 
+        student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        student.nickname.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+        
     
+         useEffect(() => {
+    // Short delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      setAnimate(true);
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
+
+  
+  // Scroll observer effect
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setVisibleCards(prev => ({
+              ...prev,
+              [entry.target.dataset.studentId]: true
+            }));
+          }
+        });
+      },
+      { threshold: 0.2 } // 20% of the card needs to be visible
+    );
+
+    // Reset card refs when filtered students change
+    cardRefs.current = cardRefs.current.slice(0, filteredStudents.length);
+
+    // Get all card elements and observe them
+    cardRefs.current.forEach(cardEl => {
+      if (cardEl) observer.observe(cardEl);
+    });
+
+    return () => {
+      cardRefs.current.forEach(cardEl => {
+        if (cardEl) observer.unobserve(cardEl);
+      });
+    };
+  }, [filteredStudents.length]); // Re-run when the number of filtered students changes
+
+
        // Handle loading state
       useEffect(() => {
         // Check if the page has already loaded
@@ -112,17 +165,8 @@ export default function YearbookPage() {
       }, []);
 
 
-  const [searchTerm, setSearchTerm] = useState('');
   
   // Filter students based on search term
-  const filteredStudents = students.filter(student => 
-    student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    student.nickname.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    student.quote.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    student.sport.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    student.hobbies.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    student.ambition.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   return (
     <div className="min-h-screen bg-[#7FB3A7] font-[Quicksand] mt-[60px]">
@@ -138,12 +182,12 @@ export default function YearbookPage() {
         </div>
       )}
         <Header />
-       {/* Topic Section with Search */}
-      <div className="py-8 px-4 bg-white/60 backdrop-blur-sm shadow-md">
+            {/* Topic Section with Search */}
+        <div className={`py-8 px-4 bg-white/60 backdrop-blur-sm shadow-md transform transition-all duration-1000 ${animate ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}>
         <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
-          <div className="text-center md:text-left font-[Amarante]">
+          <div className="text-center md:text-left font-[Delius]">
             <h2 className="text-3xl font-bold text-emerald-600">THE CLASS OF 2025</h2>
-            <p className="text-[#688bac] mt-1 font-bold">Memories to last a lifetime</p>
+            <p className="text-[#688bac] mt-1 font-bold">Memories To Last A Lifetime</p>
           </div>
           
           {/* Search Box */}
@@ -163,27 +207,59 @@ export default function YearbookPage() {
 
 
 
-      {/* Main Content */}
-      <main className="container mx-auto py-8 px-4">
-        {/* Student Cards Grid */}
-        {filteredStudents.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredStudents.map(student => (
-              <StudentCard key={student.id} student={student} />
-            ))}
-          </div>
-        ) : (
-          <div className="flex flex-col items-center justify-center py-20">
-            <p className="text-xl text-gray-600">No students found matching "{searchTerm}"</p>
-            <button 
-              className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
-              onClick={() => setSearchTerm('')}
-            >
-              Clear Search
-            </button>
-          </div>
-        )}
-      </main>
+         {/* Main Content */}
+       <main className="container mx-auto py-8 px-4">
+         {/* Student Cards Grid */}
+         {filteredStudents.length > 0 ? (
+           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+             {filteredStudents.map((student, index) => {
+               // Set up ref for the card element
+               const setCardRef = el => {
+                 if (el) {
+                   cardRefs.current[index] = el;
+                 }
+               };
+              
+               return (
+                 <div 
+                   key={student.id} 
+                   ref={setCardRef}
+                   data-student-id={student.id}
+                   className={`transform transition-all duration-1000 ${
+                     animate 
+                       ? 'translate-x-0 opacity-100' 
+                       : index % 2 === 0 
+                         ? '-translate-x-full opacity-0' 
+                         : 'translate-x-full opacity-0'
+                   } ${
+                     // Apply scroll animations after initial load animation
+                    animate && 
+                     `transform transition-opacity duration-700 ${
+                       visibleCards[student.id] 
+                         ? 'opacity-100 translate-y-0' 
+                        : 'opacity-0 translate-y-12'
+                   }`
+                 }`}
+               >
+                 <StudentCard student={student} />
+               </div>
+             );
+           })}
+         </div>
+       ) : (
+         <div className={`flex flex-col items-center justify-center py-20 transform transition-all duration-1000 ${
+           animate ? 'translate-y-0 opacity-100' : 'translate-y-32 opacity-0'
+         }`}>
+           <p className="text-xl text-gray-600">No students found matching "{searchTerm}"</p>
+           <button 
+             className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
+             onClick={() => setSearchTerm('')}
+           >
+             Clear Search
+           </button>
+         </div>
+       )}
+     </main>
 
       {/* Footer */}
      <Footer />
@@ -211,7 +287,7 @@ function StudentCard({ student }) {
         
         <div className="mt-3 bg-blue-50 rounded-lg p-3 italic text-gray-700 relative flex-grow">
           <span className="text-5xl text-blue-200 absolute -top-3 left-1">"</span>
-          <p className="relative z-10 text-sm pl-3">{student.quote}</p>
+          <p className="relative z-10 text-sm pl-3 font-[Delius]">{student.quote}</p>
           <span className="text-5xl text-blue-200 absolute -bottom-5 right-1">"</span>
         </div>
         
@@ -234,3 +310,4 @@ function DetailItem({ label, value }) {
     </div>
   );
 }
+

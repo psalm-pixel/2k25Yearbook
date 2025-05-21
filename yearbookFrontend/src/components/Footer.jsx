@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Heart, BookOpen, Star, Smile, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 export default function Footer() {
   const [emailValue, setEmailValue] = useState('');
@@ -18,6 +19,14 @@ export default function Footer() {
       setTimeout(() => setSubscribed(false), 3000);
     }
   };
+
+   const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+
 
   return (
     <footer className="bg-gradient-to-br bg-[#FDF6E3] font-[Quicksand] text-[#A3BFD9] pt-12 pb-8 border-t border-amber-100">
@@ -53,12 +62,12 @@ export default function Footer() {
                 { label: "Superlatives", href: "#" },
               ].map((link, i) => (
                 <li key={i}>
-                  <a 
-                    href={link.href} 
+                  <Link 
+                    to={link.href} 
                     className="inline-flex items-center font-bold text-[#A3BFD9] hover:text-[#7FB3A7] transition-colors"
                   >
                     <span className="mr-2">•</span> {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
