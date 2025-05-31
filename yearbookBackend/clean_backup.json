@@ -1,0 +1,362 @@
+[
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$pH0peoy8nxfgKsswvhZlbH$9JR+JLf9lz/F1SDb9kbwmlRIYGpYnFcnLW1TLP+HvmI=",
+    "last_login": "2025-05-19T09:58:26.810Z",
+    "is_superuser": true,
+    "username": "hp",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-05-19T09:57:45.834Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "uro34d69df361ry4lcpng9ii3d4mcmrt",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAURO_C2hAolA8u3fcM5MMHqRpISrsy3t026UKXM-_NvJnHbS1-62nxM7Erk-zy2wWMz1QPQA-s98Zjq-syB34o_KSdT43S63a6fwcFe9nXSqqsXKZknRmdJDQYR7ASwCkSbqAcB22Bot5TtkZogSgCGKnBJKHZ5wvRfzcm:1uGxGM:HdnT-2LXuub4jUOvSOtxvdqWdEJZIRkxecJlvqMZU8s",
+    "expire_date": "2025-06-02T09:58:26.818Z"
+  }
+},
+{
+  "model": "yearbookBackend.image",
+  "pk": 1,
+  "fields": {
+    "title": "fhhgdb",
+    "caption": "grgnbvfi",
+    "alt_text": "kfbk",
+    "image": "image/upload/v1747689706/isb8jkaivljujyau1lgd.png"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 1,
+  "fields": {
+    "name": "Abdulkadir Islamiyat",
+    "nickname": "Horlah_Jumokeh",
+    "image": "image/upload/v1748482694/laz0cffpawbko5eejamc.jpg",
+    "quote": "Success is not final. Failure is not fatal: It is the courage to continue that counts.",
+    "favorite_sport": "Basketball",
+    "hobbies": "Music and art",
+    "ambitions": "Computer Scientist"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 2,
+  "fields": {
+    "name": "Udenkwo Princess",
+    "nickname": "Kashi banks",
+    "image": "image/upload/v1748502084/gjknbudcqbtkgcjb5ep3.jpg",
+    "quote": "The biggest adventure you can take is to live the life of your dreams.",
+    "favorite_sport": "swimming",
+    "hobbies": "Dancing,Playing video games, social activities",
+    "ambitions": "Robotics engineer"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 3,
+  "fields": {
+    "name": "Ojo Ibukunoluwa",
+    "nickname": "IBK",
+    "image": "image/upload/v1748534891/fjtzt8eaoot18ha66s2w.jpg",
+    "quote": "If you think education is expensive, try ignorance.",
+    "favorite_sport": "Basketball",
+    "hobbies": "Creative writing and watching movies",
+    "ambitions": "Lawyer"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 4,
+  "fields": {
+    "name": "Adebusuyi Samuel",
+    "nickname": "Psalm",
+    "image": "image/upload/v1748540418/z5tubmw2yoqwmcpjmequ.jpg",
+    "quote": "Stack money, act broke...have more than you show and speak less than you know.",
+    "favorite_sport": "Football",
+    "hobbies": "Playing chess, watching series, programming",
+    "ambitions": "Tech entrepreneur"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 5,
+  "fields": {
+    "name": "Wahab Haliyah",
+    "nickname": "Leeyah",
+    "image": "image/upload/v1748536417/lddax4ufeubv9wn5pdx4.jpg",
+    "quote": "Be yourself, everyone else is taken.",
+    "favorite_sport": "Sprinting & Volleyball",
+    "hobbies": "Listening to music.",
+    "ambitions": "Microbiologist"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 6,
+  "fields": {
+    "name": "Olasupo Toluwanimi",
+    "nickname": "TheOnlyAurora!",
+    "image": "image/upload/v1748536690/lkvxasfiihgllx4snis7.jpg",
+    "quote": "Surviving is winning…everything else is bs.",
+    "favorite_sport": "Professional napper",
+    "hobbies": "Watching TikToks…Yapping and just feeding my delusions i guess.",
+    "ambitions": "Chartered Accounting"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 7,
+  "fields": {
+    "name": "Ganiu Daniel",
+    "nickname": "Akay Money",
+    "image": "image/upload/v1748536824/wtlbiakqyraek9o6qxvy.jpg",
+    "quote": "MUST DO IT.",
+    "favorite_sport": "None",
+    "hobbies": "Producing Songs",
+    "ambitions": "Software Developer"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 8,
+  "fields": {
+    "name": "Eze Jeffrey",
+    "nickname": "YN Da Goat",
+    "image": "image/upload/v1748537107/dvhrwcpneoaeettoed3r.jpg",
+    "quote": "Money over everything and anything nigga.",
+    "favorite_sport": "Basketball",
+    "hobbies": "Writing Songs",
+    "ambitions": "Rapper"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 9,
+  "fields": {
+    "name": "Ariyo Gbotemi",
+    "nickname": "Gee Bee",
+    "image": "image/upload/v1748537278/h2xm39qvfgyfahno3nyo.jpg",
+    "quote": "Do your best and thief the rest.",
+    "favorite_sport": "Soccer",
+    "hobbies": "Bombing",
+    "ambitions": "Engineer"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 10,
+  "fields": {
+    "name": "Kasumu Habeebat",
+    "nickname": "Beebah",
+    "image": "image/upload/v1748537486/siixfr8aue4ctrn6djn6.jpg",
+    "quote": "The best way to predict your future is to create it.",
+    "favorite_sport": "Basketball",
+    "hobbies": "Sleeping, watching movies, and frustrating ppl",
+    "ambitions": "Nursing"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 11,
+  "fields": {
+    "name": "Ojiwusi Deborah",
+    "nickname": "Debbie Lux",
+    "image": "image/upload/v1748537688/xk9d0ev1kr0v0zsezzde.jpg",
+    "quote": "Worrying wont solve tomorrows problems but it will only take away today's peace.",
+    "favorite_sport": "Swimming",
+    "hobbies": "Eating",
+    "ambitions": "Pharmacy"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 14,
+  "fields": {
+    "name": "Ike Ifunanyachukwu",
+    "nickname": "Reeyah Bae",
+    "image": "image/upload/v1748541458/zi5rvoiwngysrz8gsysj.jpg",
+    "quote": "The future belongs to those who believe in the beauty of their dream.",
+    "favorite_sport": "Volleyball",
+    "hobbies": "Sleeping, dancing, annoying people and singing",
+    "ambitions": "Health Advocate"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 15,
+  "fields": {
+    "name": "Adekunle Ayomide",
+    "nickname": "Hay Why",
+    "image": "image/upload/v1748542094/naviqahbre59sx7hzpuy.jpg",
+    "quote": "As far as you don't know tomorrow, don't look down on any body.",
+    "favorite_sport": "Football",
+    "hobbies": "playing football",
+    "ambitions": "Accountant"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 16,
+  "fields": {
+    "name": "Odedina Olajesu",
+    "nickname": "Black gurl",
+    "image": "image/upload/v1748542239/tjhxx22v57mudc5mdaf1.jpg",
+    "quote": "Keep on pushing no matter what.",
+    "favorite_sport": "Football",
+    "hobbies": "sleeping, talking and spending money.",
+    "ambitions": "AI developer"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 17,
+  "fields": {
+    "name": "Ikuesan Deborah",
+    "nickname": "Ayooluwa",
+    "image": "image/upload/v1748542530/aacs7xlmv6lkrbklprmf.jpg",
+    "quote": "Enjoy life cause it's short -smile always",
+    "favorite_sport": "Skipping",
+    "hobbies": "Singing",
+    "ambitions": "Lawyer"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 18,
+  "fields": {
+    "name": "Anokhaoya Chinonso",
+    "nickname": "Gaybriel",
+    "image": "image/upload/v1748584939/ykb0v93lihlkphoubmo8.jpg",
+    "quote": "Imagination is more important than knowledge.",
+    "favorite_sport": "Basketball",
+    "hobbies": "Drawing",
+    "ambitions": "High paid software developer and investor"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 19,
+  "fields": {
+    "name": "Adebayo miracle",
+    "nickname": "Mimi",
+    "image": "image/upload/v1748586094/cg9lszozmehhnzwkn1co.jpg",
+    "quote": "Make hay while the sun shines.",
+    "favorite_sport": "Volleyball",
+    "hobbies": "Sleeping and playing games.",
+    "ambitions": "To become a renowned computer scientist"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 20,
+  "fields": {
+    "name": "Olatunde Esther",
+    "nickname": "Adunni Ade",
+    "image": "image/upload/v1748591143/mf2f7sddqqhca6fpdiru.jpg",
+    "quote": "Always pray to have eyes that sees the best, a heart that forgives the worst, a mind that forget the bad and a soul that never loses faith.",
+    "favorite_sport": "Dancing",
+    "hobbies": "Hanging out with family and friends,and cooking.",
+    "ambitions": "Journalist"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 21,
+  "fields": {
+    "name": "Akanbi Halimah",
+    "nickname": "Richie Gucci",
+    "image": "image/upload/v1748591311/py6ffxtt5pujsvh1bexj.jpg",
+    "quote": "Never give up.",
+    "favorite_sport": "Football",
+    "hobbies": "Singing",
+    "ambitions": "Surgeon"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 22,
+  "fields": {
+    "name": "Oladipo Oluwakemi",
+    "nickname": "Kemmyzgold#oneluv",
+    "image": "image/upload/v1748591486/tviogegau01638nair44.jpg",
+    "quote": "Such is life.",
+    "favorite_sport": "Football",
+    "hobbies": "Gisting, reading, dancing",
+    "ambitions": "Medical Practitioner"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 23,
+  "fields": {
+    "name": "Kehinde Mariam",
+    "nickname": "Abolaji",
+    "image": "image/upload/v1748593719/aeiz2krgugsa4yufybz9.jpg",
+    "quote": "A girl should be two things; who and what she wants.",
+    "favorite_sport": "None",
+    "hobbies": "Watching movies",
+    "ambitions": "Model"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 24,
+  "fields": {
+    "name": "Omolayo Ayomikun",
+    "nickname": "Åy Qing",
+    "image": "image/upload/v1748621285/r1gat4qtcmdkd8xisujo.jpg",
+    "quote": "If the path you need to walk is hell, walk like u own hell never bring down ur ego for anyone.",
+    "favorite_sport": "Football",
+    "hobbies": "Watching anime/movies, flirting, playing games.",
+    "ambitions": "Pending..."
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 25,
+  "fields": {
+    "name": "Mamora Daniel",
+    "nickname": "DANNYUNG",
+    "image": "image/upload/v1748621480/jmjznj1vgg7biriw6lie.jpg",
+    "quote": "Good girls exist around the corners of the earth, unfortunately the earth is round.",
+    "favorite_sport": "Football",
+    "hobbies": "Watching anime and playing games.",
+    "ambitions": "......"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 26,
+  "fields": {
+    "name": "Adeniyi Yusuf",
+    "nickname": "Bigwangar",
+    "image": "image/upload/v1748623087/cln3gj0ry7jaoc21elnm.jpg",
+    "quote": "Never trust a hoe.",
+    "favorite_sport": "Football",
+    "hobbies": "Playing games.",
+    "ambitions": "Doctor"
+  }
+},
+{
+  "model": "yearbookBackend.students",
+  "pk": 27,
+  "fields": {
+    "name": "Akinranti Tomiwa",
+    "nickname": "Drayden",
+    "image": "image/upload/v1748672286/dbaxrtl65kpprqufg295.jpg",
+    "quote": "NEVER GIVE UP.",
+    "favorite_sport": "Football",
+    "hobbies": "Watching football, playing games",
+    "ambitions": "Pilot"
+  }
+}
+]

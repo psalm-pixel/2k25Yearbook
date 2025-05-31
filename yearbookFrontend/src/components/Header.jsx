@@ -47,13 +47,13 @@ export default function Header() {
         <div className="flex flex-row items-center justify-between w-full">
 
        <Link to={'/'}>
-       <h1 className='text-xl text-[#A3BFD9] font-bold '>Class of <span className='text-[18px]'>2K</span><span className='text-[#7FB3A7]'>25</span></h1>
+       <h1 className='text-xl text-[#7F7D9C] font-bold '>Class of <span className='text-[18px]'>2K</span><span className='text-[#7FB3A7]'>25</span></h1>
        </Link> 
       {
        isOpen ? 
-       <RxCross2 className='md:hidden text-[#A3BFD9] text-2xl hover:text-[#50C878] cursor-pointer transition duration-100' onClick={handleToggle} /> 
+       <RxCross2 className='md:hidden text-[#778899] text-2xl hover:text-[#50C878] cursor-pointer transition duration-100' onClick={handleToggle} /> 
        :   
-          <FaBars className='md:hidden text-[#A3BFD9] text-2xl hover:text-[#50C878] cursor-pointer transition duration-100' onClick={handleToggle}/>
+          <FaBars className='md:hidden text-[#778899] text-2xl hover:text-[#50C878] cursor-pointer transition duration-100' onClick={handleToggle}/>
       } 
         </div>
         <nav className="flex justify-between items-center space-x-4 ">
@@ -61,7 +61,7 @@ export default function Header() {
               <li>
                 <Link
                  to="/Legacy"
-                  className="text-[#A3BFD9] font-bold text-nowrap no-underline relative group"
+                  className="text-[#778899] font-bold text-nowrap no-underline relative group"
                 >
                   The Legacy
                   <span className="absolute left-0 right-0  h-[0.129rem] rounded mt-[21px] bg-[#7FB3A7]  transform scale-x-0 group-hover:scale-x-100 transition-transform duration-250 ease-in-out"></span>
@@ -71,7 +71,7 @@ export default function Header() {
               <li>
                 <Link
                   to="#skills"
-                  className="text-[#A3BFD9] font-bold  no-underline relative group"
+                  className="text-[#778899] font-bold  no-underline relative group"
                 >
                   Memories 
                   <span className="absolute left-0 right-0  h-[0.129rem] rounded mt-[21px] bg-[#7FB3A7]  transform scale-x-0 group-hover:scale-x-100 transition-transform duration-250 ease-in-out"></span>
@@ -80,7 +80,7 @@ export default function Header() {
               <li>
                 <Link
                   to="#services"
-                  className="text-[#A3BFD9] font-bold  no-underline relative group"
+                  className="text-[#778899] font-bold  no-underline relative group"
                 >
                   Superlatives 
                   <span className="absolute left-0 right-0  h-[0.129rem] rounded mt-[21px] bg-[#7FB3A7]  transform scale-x-0 group-hover:scale-x-100 transition-transform duration-250 ease-in-out"></span>
@@ -89,7 +89,7 @@ export default function Header() {
               <li>
                 <Link
                   to="#contact"
-                  className="text-[#A3BFD9] font-bold no-underline relative group"
+                  className="text-[#778899] font-bold no-underline relative group"
                 >
                   Mugshots
                   <span className="absolute left-0 right-0  h-[0.129rem] rounded mt-[21px] bg-[#7FB3A7]  transform scale-x-0 group-hover:scale-x-100 transition-transform duration-250 ease-in-out"></span>
@@ -104,7 +104,7 @@ export default function Header() {
                 to={item.href}
                 className="block py-2 px-4 text-sm hover:scale-105 transition duration-300 hover:text-[#50C878]"
               >
-               <span className="text-[#A3BFD9] font-bold hover:text-[#50C878]">
+               <span className="text-[#778899] font-bold hover:text-[#50C878]">
                  {item.name}
                 </span>
               </Link>

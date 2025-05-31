@@ -2,116 +2,86 @@ import { useState, useEffect, useRef } from 'react';
 import { Search } from 'lucide-react';
 import Header from './components/Header';
 import Footer from './components/Footer';
-
-// Sample student data
-const students = [
-  {
-    id: 1,
-    name: "Alex Johnson",
-    nickname: "Oriyomi",
-    quote: "Make money, don't make noise",
-    sport: "Basketball",
-    hobbies: "Photography, Hiking",
-    ambition: "Software Engineer",
-    image: "../src/assets/img/student_template/img1.jpg"
-  },
-  {
-    id: 2,
-    name: "Jamie Smith",
-    nickname: "Psalm",
-    quote: "Stay hungry, stay foolish.",
-    sport: "Soccer",
-    hobbies: "Guitar, Gaming",
-    ambition: "Graphic Designer",
-    image: "../src/assets/img/student_template/img2.avif"
-  },
-  {
-    id: 3,
-    name: "Taylor Wright",
-    nickname: "Akay Money",
-    quote: "Life is what happens when you're busy making other plans.",
-    sport: "Swimming",
-    hobbies: "Reading, Cooking",
-    ambition: "Doctor",
-    image: "../src/assets/img/student_template/img3.avif"
-  },
-  {
-    id: 4,
-    name: "Morgan Lee",
-    nickname: "Lil Rex",
-    quote: "The only way to do great work is to love what you do.",
-    sport: "Tennis",
-    hobbies: "Chess, Volunteering",
-    ambition: "Teacher",
-    image: "../src/assets/img/student_template/img4.avif"
-  },
-  {
-    id: 5,
-    name: "Riley Chen",
-    nickname: "Big Wanger",
-    quote: "Be the change you wish to see in the world.",
-    sport: "Volleyball",
-    hobbies: "Painting, Dance",
-    ambition: "Architect",
-    image: "/api/placeholder/300/300"
-  },
-  {
-    id: 6,
-    name: "Jordan Patel",
-    nickname: "Jo",
-    quote: "Yesterday is history, tomorrow is a mystery, but today is a gift.",
-    sport: "Track",
-    hobbies: "Poetry, Robotics",
-    ambition: "Journalist",
-    image: "/api/placeholder/300/300"
-  },
-  {
-    id: 7,
-    name: "Casey Wilson",
-    nickname: "Case",
-    quote: "The future belongs to those who believe in the beauty of their dreams.",
-    sport: "Baseball",
-    hobbies: "Film, Debate",
-    ambition: "Lawyer",
-    image: "/api/placeholder/300/300"
-  },
-  {
-    id: 8,
-    name: "Quinn Murphy",
-    nickname: "Q",
-    quote: "Do what you can, with what you have, where you are.",
-    sport: "Hockey",
-    hobbies: "Astronomy, Music",
-    ambition: "Scientist",
-    image: "/api/placeholder/300/300"
-  }
-];
+// import axios from 'axios'; // Note: Replace with fetch or your preferred HTTP client
 
 export default function YearbookPage() {
+  const [loading, setLoading] = useState(true);
+  const [animate, setAnimate] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [visibleCards, setVisibleCards] = useState({});
+  const [student, setStudents] = useState([]);
+  const [loadedImageCount, setLoadedImageCount] = useState(0);
+  const [totalImages, setTotalImages] = useState(0);
+  const [error, setError] = useState(null);
+  const cardRefs = useRef([]);
 
-      const [loading, setLoading] = useState(true);
-      const [animate, setAnimate] = useState(false);
-      const [searchTerm, setSearchTerm] = useState('');
-      const [visibleCards, setVisibleCards] = useState({});
-      const cardRefs = useRef([]);
-  
-      const filteredStudents = students.filter(student => 
-        student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        student.nickname.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+  // Fetch students from API
+  useEffect(() => {
+    // Replace axios with fetch - update this to match your actual API call
+    fetch('http://localhost:8000/students/')
+      .then(response => response.json())
+      .then(data => {
+        const studentsData = data.results;
+        setStudents(studentsData);
+        setTotalImages(studentsData.length);
+        console.log(data.results);
         
-    
-         useEffect(() => {
-    // Short delay to ensure DOM is ready
-    const timer = setTimeout(() => {
-      setAnimate(true);
-    }, 100);
-    
-    return () => clearTimeout(timer);
+        // Start preloading images after we have the student data
+        preloadImages(studentsData);
+      })
+      .catch(error => {
+        setError(error.message);
+        setLoading(false); // Stop loading on error
+      });
   }, []);
 
+  // Preload all student images
+  const preloadImages = (studentsData) => {
+    if (studentsData.length === 0) {
+      setLoading(false);
+      return;
+    }
 
-  
+    let loadedImages = 0;
+    setLoadedImageCount(0);
+
+    const imagePromises = studentsData.map((student) => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+          loadedImages++;
+          setLoadedImageCount(loadedImages);
+          resolve(student.image_url);
+        };
+        img.onerror = () => {
+          loadedImages++;
+          setLoadedImageCount(loadedImages);
+          console.warn(`Failed to load image for ${student.name}: ${student.image_url}`);
+          resolve(student.image_url); // Resolve anyway to continue loading
+        };
+        img.src = student.image_url;
+      });
+    });
+
+    Promise.allSettled(imagePromises).then(() => {
+      // Add a small delay to show completion
+      setTimeout(() => {
+        setLoading(false);
+        // Trigger animations after loading is complete
+        setTimeout(() => {
+          setAnimate(true);
+        }, 100);
+      }, 500);
+    });
+  };
+
+  const students = student || [];
+
+  const filteredStudents = students.filter(student => 
+    student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    student.nickname.toLowerCase().includes(searchTerm.toLowerCase())
+  ).sort((a, b) => a.name.localeCompare(b.name));
+
   // Scroll observer effect
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -125,13 +95,11 @@ export default function YearbookPage() {
           }
         });
       },
-      { threshold: 0.2 } // 20% of the card needs to be visible
+      { threshold: 0.2 }
     );
 
-    // Reset card refs when filtered students change
     cardRefs.current = cardRefs.current.slice(0, filteredStudents.length);
 
-    // Get all card elements and observe them
     cardRefs.current.forEach(cardEl => {
       if (cardEl) observer.observe(cardEl);
     });
@@ -141,49 +109,78 @@ export default function YearbookPage() {
         if (cardEl) observer.unobserve(cardEl);
       });
     };
-  }, [filteredStudents.length]); // Re-run when the number of filtered students changes
+  }, [filteredStudents.length]);
 
+  const progressPercentage = totalImages > 0 ? (loadedImageCount / totalImages) * 100 : 0;
 
-       // Handle loading state
-      useEffect(() => {
-        // Check if the page has already loaded
-        if (document.readyState === 'complete') {
-          setLoading(false);
-        } else {
-          // Add event listener for when page loads
-          const handleLoad = () => {
-            setTimeout(() => {
-              setLoading(false);
-            }, 1000); // Extra delay for smoother transition
-          };
-          
-          window.addEventListener('load', handleLoad);
-          
-          // Cleanup
-          return () => window.removeEventListener('load', handleLoad);
-        }
-      }, []);
+  // Loading Screen
+  if (loading) {
+    return (
+      <div className="fixed inset-0 bg-gradient-to-br from-[#7FB3A7] via-[#6BA396] to-[#5A9386] flex items-center justify-center z-50">
+        <div className="text-center max-w-md mx-auto px-8">
+          {/* Loading Animation */}
+          <div className="relative mb-8">
+            <div className="w-24 h-24 mx-auto border-4 border-white/20 rounded-full animate-spin border-t-white"></div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-16 h-16 border-4 border-emerald-300/30 rounded-full animate-ping"></div>
+            </div>
+          </div>
 
+          {/* Title */}
+          <h1 className="text-4xl font-bold text-white mb-4 animate-pulse font-[Delius]">
+            Loading Yearbook
+          </h1>
 
-  
-  // Filter students based on search term
+          {/* Progress Bar */}
+          <div className="w-full bg-white/20 rounded-full h-3 mb-4 overflow-hidden">
+            <div 
+              className="h-full bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full transition-all duration-300 ease-out"
+              style={{ width: `${progressPercentage}%` }}
+            ></div>
+          </div>
+
+          {/* Progress Text */}
+          <p className="text-white/80 text-lg mb-2 font-[Quicksand]">
+            Loading student memories...
+          </p>
+          <p className="text-white/60 text-sm font-[Quicksand]">
+            {loadedImageCount} of {totalImages} photos loaded
+          </p>
+
+          {/* Decorative Elements */}
+          <div className="absolute top-10 left-10 w-20 h-20 bg-white/10 rounded-full animate-bounce delay-100"></div>
+          <div className="absolute top-20 right-16 w-12 h-12 bg-emerald-300/20 rounded-full animate-bounce delay-300"></div>
+          <div className="absolute bottom-16 left-20 w-16 h-16 bg-teal-300/20 rounded-full animate-bounce delay-500"></div>
+          <div className="absolute bottom-10 right-10 w-8 h-8 bg-white/20 rounded-full animate-bounce delay-700"></div>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-[#7FB3A7] flex items-center justify-center">
+        <div className="text-center text-white">
+          <h2 className="text-2xl font-bold mb-4">Error Loading Yearbook</h2>
+          <p className="mb-4">{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="px-6 py-2 bg-white text-[#7FB3A7] rounded-full hover:bg-gray-100 transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#7FB3A7] font-[Quicksand] mt-[60px]">
-        {loading && (
-        <div className="fixed inset-0 bg-[#7FB3A7] flex flex-col items-center justify-center z-100">
-          <div className="relative w-24 h-24">
-            <div className="absolute inset-0 border-8 border-blue-200 rounded-full"></div>
-            <div className="absolute inset-0 border-8 border-transparent border-t-blue-500 rounded-full animate-spin"></div>
-          </div>
-         
-          <div className="mt-6 text-white text-xl font-semibold">Loading Yearbook...</div>
-          <div className="mt-2 text-blue-200">Please wait while we collect memories</div>
-        </div>
-      )}
-        <Header />
-            {/* Topic Section with Search */}
-        <div className={`py-8 px-4 bg-white/60 backdrop-blur-sm shadow-md transform transition-all duration-1000 ${animate ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}>
+      <Header />
+      
+      {/* Topic Section with Search */}
+      <div className={`py-8  px-4 bg-white/60 backdrop-blur-sm shadow-md transform transition-all duration-1000 ${animate ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}>
         <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
           <div className="text-center md:text-left font-[Delius]">
             <h2 className="text-3xl font-bold text-emerald-600">THE CLASS OF 2025</h2>
@@ -204,65 +201,60 @@ export default function YearbookPage() {
         </div>
       </div>
 
-
-
-
-         {/* Main Content */}
-       <main className="container mx-auto py-8 px-4">
-         {/* Student Cards Grid */}
-         {filteredStudents.length > 0 ? (
-           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-             {filteredStudents.map((student, index) => {
-               // Set up ref for the card element
-               const setCardRef = el => {
-                 if (el) {
-                   cardRefs.current[index] = el;
-                 }
-               };
-              
-               return (
-                 <div 
-                   key={student.id} 
-                   ref={setCardRef}
-                   data-student-id={student.id}
-                   className={`transform transition-all duration-1000 ${
-                     animate 
-                       ? 'translate-x-0 opacity-100' 
-                       : index % 2 === 0 
-                         ? '-translate-x-full opacity-0' 
-                         : 'translate-x-full opacity-0'
-                   } ${
-                     // Apply scroll animations after initial load animation
+      {/* Main Content */}
+      <main className="container mx-auto py-8 px-4 mb-7">
+        {/* Student Cards Grid */}
+        {filteredStudents.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {filteredStudents.map((student, index) => {
+              const setCardRef = el => {
+                if (el) {
+                  cardRefs.current[index] = el;
+                }
+              };
+             
+              return (
+                <div 
+                  key={student.id} 
+                  ref={setCardRef}
+                  data-student-id={student.id}
+                  className={`transform transition-all duration-1000 ${
+                    animate 
+                      ? 'translate-x-0 opacity-100' 
+                      : index % 2 === 0 
+                        ? '-translate-x-full opacity-0' 
+                        : 'translate-x-full opacity-0'
+                  } ${
                     animate && 
-                     `transform transition-opacity duration-700 ${
-                       visibleCards[student.id] 
-                         ? 'opacity-100 translate-y-0' 
+                    `transform transition-opacity duration-700 ${
+                      visibleCards[student.id] 
+                        ? 'opacity-100 translate-y-0' 
                         : 'opacity-0 translate-y-12'
-                   }`
-                 }`}
-               >
-                 <StudentCard student={student} />
-               </div>
-             );
-           })}
-         </div>
-       ) : (
-         <div className={`flex flex-col items-center justify-center py-20 transform transition-all duration-1000 ${
-           animate ? 'translate-y-0 opacity-100' : 'translate-y-32 opacity-0'
-         }`}>
-           <p className="text-xl text-gray-600">No students found matching "{searchTerm}"</p>
-           <button 
-             className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
-             onClick={() => setSearchTerm('')}
-           >
-             Clear Search
-           </button>
-         </div>
-       )}
-     </main>
+                    }`
+                  }`}
+                >
+                  <StudentCard student={student} />
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className={`flex flex-col items-center justify-center py-20 transform transition-all duration-1000 ${
+            animate ? 'translate-y-0 opacity-100' : 'translate-y-32 opacity-0'
+          }`}>
+            <p className="text-xl text-gray-600">No students found matching "{searchTerm}"</p>
+            <button 
+              className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
+              onClick={() => setSearchTerm('')}
+            >
+              Clear Search
+            </button>
+          </div>
+        )}
+      </main>
 
       {/* Footer */}
-     <Footer />
+      <Footer />
     </div>
   );
 }
@@ -273,7 +265,7 @@ function StudentCard({ student }) {
     <div className="bg-[#FDF6E3] rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-full transform hover:-translate-y-1 transition-transform">
       <div className="relative">
         <img 
-          src={student.image} 
+          src={student.image_url} 
           alt={student.name} 
           className="w-full h-64 object-cover object-center"
         />
@@ -291,10 +283,10 @@ function StudentCard({ student }) {
           <span className="text-5xl text-blue-200 absolute -bottom-5 right-1">"</span>
         </div>
         
-        <div className="mt-4 space-y-1.5">
-          <DetailItem label="Favorite Sport" value={student.sport} />
+        <div className="mt-4 space-y-1.5 text-[#778899]">
+          <DetailItem label="Favorite Sport" value={student.favorite_sport} />
           <DetailItem label="Hobbies" value={student.hobbies} />
-          <DetailItem label="Ambition" value={student.ambition} />
+          <DetailItem label="Ambition" value={student.ambitions} />
         </div>
       </div>
     </div>
@@ -310,4 +302,3 @@ function DetailItem({ label, value }) {
     </div>
   );
 }
-

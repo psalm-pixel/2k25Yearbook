@@ -1,7 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Heart, BookOpen, Star, Smile, Mail } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { useLocation } from "react-router-dom";
+// import { Link } from 'react-router-dom';
+// import { useLocation } from "react-router-dom";
+
+// TikTok Icon Component
+const TikTokIcon = ({ className = "w-5 h-5" }) => (
+  <svg 
+    className={className} 
+    viewBox="0 0 24 24" 
+    fill="currentColor"
+  >
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+  </svg>
+);
 
 export default function Footer() {
   const [emailValue, setEmailValue] = useState('');
@@ -20,13 +31,11 @@ export default function Footer() {
     }
   };
 
-   const { pathname } = useLocation();
+  // const { pathname } = useLocation();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
-
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, [pathname]);
 
   return (
     <footer className="bg-gradient-to-br bg-[#FDF6E3] font-[Quicksand] text-[#A3BFD9] pt-12 pb-8 border-t border-amber-100">
@@ -62,20 +71,18 @@ export default function Footer() {
                 { label: "Superlatives", href: "#" },
               ].map((link, i) => (
                 <li key={i}>
-                  <Link 
-                    to={link.href} 
+                  <a 
+                    href={link.href}
                     className="inline-flex items-center font-bold text-[#A3BFD9] hover:text-[#7FB3A7] transition-colors"
                   >
                     <span className="mr-2">•</span> {link.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
           </div>
 
         </div>
-
-        
 
         {/* Quote */}
         <div className="relative py-8 px-4 md:px-12 mb-8 text-center">
@@ -88,6 +95,19 @@ export default function Footer() {
           <p className="text-gray-500 font-medium">Class of 2025</p>
         </div>
 
+        {/* TikTok Link at Bottom */}
+        <div className="mt-6 pt-4 text-center">
+          <a 
+            href="https://www.tiktok.com/@oakfield.016"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center font-bold text-[#A3BFD9] hover:text-[#7FB3A7] transition-all duration-300 group bg-white/50 hover:bg-white/80 px-6 py-3 rounded-full shadow-sm hover:shadow-md"
+          >
+            <TikTokIcon className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
+            Follow Our Class on TikTok
+            <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+          </a>
+        </div>
         {/* Bottom / Legal */}
         <div className="border-t border-amber-100 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center font-bold text-sm text-gray-500">
           <div className="order-2 md:order-1 mt-4 md:mt-0">
@@ -101,6 +121,7 @@ export default function Footer() {
             <span className="text-[#7FB3A7]">nostalgia</span>
           </div>
         </div>
+
       </div>
     </footer>
   );

@@ -10,3 +10,15 @@ class Image(models.Model):
     
     def __str__(self):
         return self.title
+    
+class Students(models.Model):
+    name = models.CharField(max_length=100)
+    nickname = models.CharField(max_length=100, blank=True)
+    image = CloudinaryField('students')
+    quote = models.TextField(blank=True)
+    favorite_sport = models.CharField(max_length=100, blank=True)
+    hobbies = models.TextField(blank=True)
+    ambitions = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name

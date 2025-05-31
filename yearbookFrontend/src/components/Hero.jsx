@@ -39,7 +39,7 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative h-screen flex items-center justify-center overflow-hidden"
+      className="relative md:h-screen h-[500px] flex items-center justify-center overflow-hidden"
     >
       {/* Background Image */}
       <div
