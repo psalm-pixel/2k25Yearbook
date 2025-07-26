@@ -1,0 +1,12 @@
+{
+  "name": "2k25-yearbook",
+  "version": "1.0.0",
+  "description": "2K25 Yearbook Application",
+  "scripts": {
+    "build": "cd yearbookFrontend && npm run build",
+    "install": "cd yearbookFrontend && npm install"
+  },
+  "workspaces": [
+    "yearbookFrontend"
+  ]
+}
