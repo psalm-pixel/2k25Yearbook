@@ -1,21 +1,5 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "yearbookFrontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/yearbookFrontend/dist/$1"
-    }
-  ],
-  "installCommand": "cd yearbookFrontend && npm install",
   "buildCommand": "cd yearbookFrontend && npm run build",
-  "outputDirectory": "yearbookFrontend/dist"
+  "outputDirectory": "yearbookFrontend/dist",
+  "installCommand": "cd yearbookFrontend && npm install"
 }
