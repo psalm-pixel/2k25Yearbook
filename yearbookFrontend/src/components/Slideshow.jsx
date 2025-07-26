@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, Camera } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Camera, AlertCircle } from 'lucide-react';
 import { API_ENDPOINTS } from '../config/api';
 
 export default function MemoriesSlider() {
@@ -44,66 +44,14 @@ export default function MemoriesSlider() {
         const data = await response.json();
         setSlides(data);
         
-        // If no slides from API, use fallback data
+        // If no slides from API, set error
         if (data.length === 0) {
-          setSlides([
-            {
-              id: 1,
-              title: 'Graduation Day Celebrations',
-              description: 'Students celebrating graduation',
-              optimized_image_url: 'https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
-            },
-            {
-              id: 2,
-              title: 'Academic Excellence Awards',
-              description: 'Awards ceremony',
-              optimized_image_url: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
-            },
-            {
-              id: 3,
-              title: 'Final Year Project Presentations',
-              description: 'Students presenting projects',
-              optimized_image_url: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
-            },
-            {
-              id: 4,
-              title: 'Class Farewell Moments',
-              description: 'Students saying goodbye',
-              optimized_image_url: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
-            }
-          ]);
+          setError('No slideshow images available');
         }
         
       } catch (err) {
         console.error('Error fetching slides:', err);
-        setError(err.message);
-        // Use fallback data on error
-        setSlides([
-          {
-            id: 1,
-            title: 'Graduation Day Celebrations',
-            description: 'Students celebrating graduation',
-            optimized_image_url: 'https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
-          },
-          {
-            id: 2,
-            title: 'Academic Excellence Awards',
-            description: 'Awards ceremony',
-            optimized_image_url: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
-          },
-          {
-            id: 3,
-            title: 'Final Year Project Presentations',
-            description: 'Students presenting projects',
-            optimized_image_url: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
-          },
-          {
-            id: 4,
-            title: 'Class Farewell Moments',
-            description: 'Students saying goodbye',
-            optimized_image_url: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
-          }
-        ]);
+        setError(err.message || 'Failed to load slideshow');
       } finally {
         setLoading(false);
         setTimeout(() => {
@@ -256,6 +204,7 @@ export default function MemoriesSlider() {
     return `translateX(${baseTransform + dragPercent}%)`;
   };
 
+
   return (
     <div className="w-full py-8 sm:py-12 lg:py-16 px-3 sm:px-5 lg:px-8 max-w-7xl mx-auto">
       {/* Header Section - Responsive */}
@@ -284,7 +233,7 @@ export default function MemoriesSlider() {
             <div key={index} className="relative bg-gradient-to-br from-gray-900/90 via-slate-800/90 to-gray-900/90 backdrop-blur-xl rounded-2xl overflow-hidden shadow-2xl border border-white/10">
               <div className="relative h-64 overflow-hidden">
                 <img
-                  src={image.optimized_image_url || image.image_url}
+                  src={image.image_url}
                   alt={image.alt_text || image.title}
                   className="w-full h-full object-cover object-center"
                   draggable={false}
@@ -329,7 +278,7 @@ export default function MemoriesSlider() {
               {images.map((image, index) => (
                 <div key={index} className="min-w-full h-full flex-shrink-0 relative">
                   <img
-                    src={image.optimized_image_url || image.image_url}
+                    src={image.image_url}
                     alt={image.alt_text || image.title}
                     className="w-full h-full object-cover object-center"
                     draggable={false}
@@ -398,7 +347,7 @@ export default function MemoriesSlider() {
                     }`}
                   >
                     <img
-                      src={image.optimized_image_url || image.image_url}
+                      src={image.image_url}
                       alt={`Memory ${index + 1}`}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                       draggable={false}
