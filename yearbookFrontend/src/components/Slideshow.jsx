@@ -33,7 +33,7 @@ export default function MemoriesSlider() {
     const fetchSlides = async () => {
       try {
         setLoading(true);
-        const response = await fetch('https://2k25yearbook-production.up.railway.app/homepage-slides/active_slides/');
+        const response = await fetch('https://2k25yeabook-production.up.railway.app/homepage-slides/active_slides/');
         
         if (!response.ok) {
           throw new Error('Failed to fetch slides');
