@@ -71,7 +71,6 @@ export default function Footer() {
                 { label: "Class Gallery", href: "/memories" },
                 { label: "Teacher Tributes", href: "#" },
                 { label: "Class Mugshots", href: "#" },
-                { label: "Superlatives", href: "#" },
               ].map((link, i) => (
                 <li key={i}>
                   <Link

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, Heart, Star, Camera } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Camera } from 'lucide-react';
 
 export default function MemoriesSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -23,46 +23,97 @@ export default function MemoriesSlider() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Sample memory data - replace with your API data
-  const [students, setStudents] = useState([
-    {
-      image_url: 'https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      caption: 'Graduation Day Celebrations',
-      alt_text: 'Students celebrating graduation',
-      memory_type: 'Milestone',
-      date: 'May 2025'
-    },
-    {
-      image_url: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      caption: 'Academic Excellence Awards',
-      alt_text: 'Awards ceremony',
-      memory_type: 'Achievement',
-      date: 'April 2025'
-    },
-    {
-      image_url: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      caption: 'Final Year Project Presentations',
-      alt_text: 'Students presenting projects',
-      memory_type: 'Academic',
-      date: 'March 2025'
-    },
-    {
-      image_url: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      caption: 'Class Farewell Moments',
-      alt_text: 'Students saying goodbye',
-      memory_type: 'Friendship',
-      date: 'May 2025'
-    }
-  ]);
+  // Homepage slides from database
+  const [slides, setSlides] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Simulate API call
+  // Fetch slides from API
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoaded(true);
-    }, 500);
+    const fetchSlides = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('http://localhost:8000/homepage-slides/active_slides/');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch slides');
+        }
+        
+        const data = await response.json();
+        setSlides(data);
+        
+        // If no slides from API, use fallback data
+        if (data.length === 0) {
+          setSlides([
+            {
+              id: 1,
+              title: 'Graduation Day Celebrations',
+              description: 'Students celebrating graduation',
+              optimized_image_url: 'https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
+            },
+            {
+              id: 2,
+              title: 'Academic Excellence Awards',
+              description: 'Awards ceremony',
+              optimized_image_url: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
+            },
+            {
+              id: 3,
+              title: 'Final Year Project Presentations',
+              description: 'Students presenting projects',
+              optimized_image_url: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
+            },
+            {
+              id: 4,
+              title: 'Class Farewell Moments',
+              description: 'Students saying goodbye',
+              optimized_image_url: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
+            }
+          ]);
+        }
+        
+      } catch (err) {
+        console.error('Error fetching slides:', err);
+        setError(err.message);
+        // Use fallback data on error
+        setSlides([
+          {
+            id: 1,
+            title: 'Graduation Day Celebrations',
+            description: 'Students celebrating graduation',
+            optimized_image_url: 'https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
+          },
+          {
+            id: 2,
+            title: 'Academic Excellence Awards',
+            description: 'Awards ceremony',
+            optimized_image_url: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
+          },
+          {
+            id: 3,
+            title: 'Final Year Project Presentations',
+            description: 'Students presenting projects',
+            optimized_image_url: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
+          },
+          {
+            id: 4,
+            title: 'Class Farewell Moments',
+            description: 'Students saying goodbye',
+            optimized_image_url: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
+          }
+        ]);
+      } finally {
+        setLoading(false);
+        setTimeout(() => {
+          setIsLoaded(true);
+        }, 300);
+      }
+    };
+
+    fetchSlides();
   }, []);
 
-  const images = students || [];
+  const images = slides || [];
 
   // Auto-play functionality
   useEffect(() => {
@@ -203,15 +254,6 @@ export default function MemoriesSlider() {
     return `translateX(${baseTransform + dragPercent}%)`;
   };
 
-  const getMemoryIcon = (type) => {
-    switch (type) {
-      case 'Milestone': return <Star className="w-3 h-3 sm:w-4 sm:h-4" />;
-      case 'Achievement': return <Heart className="w-3 h-3 sm:w-4 sm:h-4" />;
-      case 'Friendship': return <Heart className="w-3 h-3 sm:w-4 sm:h-4" />;
-      default: return <Camera className="w-3 h-3 sm:w-4 sm:h-4" />;
-    }
-  };
-
   return (
     <div className="w-full py-8 sm:py-12 lg:py-16 px-3 sm:px-5 lg:px-8 max-w-7xl mx-auto">
       {/* Header Section - Responsive */}
@@ -246,34 +288,8 @@ export default function MemoriesSlider() {
                   draggable={false}
                 />
                 
-                {/* Enhanced Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-                <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/20 via-transparent to-purple-900/20"></div>
-                
-                {/* Memory Content */}
-                <div className="absolute bottom-0 left-0 right-0 p-4">
-                  {/* Memory Type Badge */}
-                  <div className="flex flex-col items-start space-y-2 mb-3">
-                    <div className="flex items-center space-x-1.5 bg-emerald-500/20 backdrop-blur-md border border-emerald-400/30 px-3 py-1.5 rounded-full">
-                      {getMemoryIcon(image.memory_type)}
-                      <span className="text-emerald-300 text-xs font-semibold">{image.memory_type}</span>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-md px-3 py-1 rounded-full">
-                      <span className="text-white/80 text-xs">{image.date}</span>
-                    </div>
-                  </div>
-                  
-                  {/* Main Caption */}
-                  <h3 className="text-white text-lg font-bold mb-2 leading-tight">
-                    {image.caption}
-                  </h3>
-                  
-                  {/* Decorative Element */}
-                  <div className="flex items-center space-x-1.5">
-                    <div className="h-0.5 w-8 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full"></div>
-                    <div className="text-white/60 text-xs">Memory {index + 1} of {images.length}</div>
-                  </div>
-                </div>
+                {/* Subtle gradient overlay for better image visibility */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
               </div>
             </div>
           ))}
@@ -317,34 +333,8 @@ export default function MemoriesSlider() {
                     draggable={false}
                   />
                   
-                  {/* Enhanced Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/20 via-transparent to-purple-900/20"></div>
-                  
-                  {/* Memory Content - Responsive Positioning & Sizing */}
-                  <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 md:p-6 lg:p-10">
-                    {/* Memory Type Badge - Responsive */}
-                    <div className="flex flex-col xs:flex-row items-start xs:items-center space-y-2 xs:space-y-0 xs:space-x-2 mb-3 sm:mb-4">
-                      <div className="flex items-center space-x-1.5 sm:space-x-2 bg-emerald-500/20 backdrop-blur-md border border-emerald-400/30 px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 rounded-full">
-                        {getMemoryIcon(image.memory_type)}
-                        <span className="text-emerald-300 text-xs sm:text-sm font-semibold">{image.memory_type}</span>
-                      </div>
-                      <div className="bg-white/10 backdrop-blur-md px-2 sm:px-3 py-1 rounded-full">
-                        <span className="text-white/80 text-xs sm:text-sm">{image.date}</span>
-                      </div>
-                    </div>
-                    
-                    {/* Main Caption - Responsive Text Sizing */}
-                    <h3 className="text-white text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold mb-2 sm:mb-3 leading-tight">
-                      {image.caption}
-                    </h3>
-                    
-                    {/* Decorative Element - Responsive */}
-                    <div className="flex items-center space-x-1.5 sm:space-x-2">
-                      <div className="h-0.5 sm:h-1 w-8 sm:w-10 lg:w-12 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full"></div>
-                      <div className="text-white/60 text-xs sm:text-sm">Memory {index + 1} of {images.length}</div>
-                    </div>
-                  </div>
+                  {/* Subtle gradient overlay for better image visibility */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
                 </div>
               ))}
             </div>
@@ -411,12 +401,6 @@ export default function MemoriesSlider() {
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                       draggable={false}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                    <div className="absolute bottom-0.5 sm:bottom-1 left-0.5 sm:left-1 right-0.5 sm:right-1">
-                      <div className="text-white text-[10px] sm:text-xs font-medium truncate">
-                        {image.memory_type}
-                      </div>
-                    </div>
                   </button>
                 ))}
               </div>
@@ -429,7 +413,7 @@ export default function MemoriesSlider() {
       <div className={`text-center mt-6 sm:mt-8 lg:mt-12 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
         <p className="text-[#F8F9FA] text-sm sm:text-base lg:text-lg font-light px-4">
           Each photograph is a <span className="text-[#2F4F4F] font-medium">treasure</span>, each moment a 
-          <span className="text-[#36454F] font-mediu"> legacy</span> of our time together
+          <span className="text-[#36454F] font-medium"> legacy</span> of our time together
         </p>
       </div>
     </div>

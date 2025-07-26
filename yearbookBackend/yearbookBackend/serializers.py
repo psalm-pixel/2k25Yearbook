@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from rest_framework import serializers
-from .models import PrefectQuote, Students, Image, Gallery
+from .models import Students, Image, Gallery, Mugshot, HomepageSlide
 
 
 class ImageSerializer(serializers.ModelSerializer):
@@ -29,13 +28,28 @@ class StudentsSerializer(serializers.ModelSerializer):
     
 
 
-class PrefectQuoteSerializer(serializers.ModelSerializer):
-    student_name = serializers.CharField(source='student.name', read_only=True)
-    student_image = serializers.ImageField(source='student.image', read_only=True)
+class MugshotsSerializer(serializers.ModelSerializer):
+    photo_url = serializers.ReadOnlyField()
+    thumbnail_url = serializers.ReadOnlyField()
     
     class Meta:
-        model = PrefectQuote
-        fields = ['id', 'student_name', 'student_image', 'role', 'quote']
+        model = Mugshot
+        fields = [
+            'id', 'name', 'photo', 'photo_url', 'thumbnail_url', 'created_at'
+        ]
+        read_only_fields = ['photo_url', 'thumbnail_url', 'created_at']
+    
+    def create(self, validated_data):
+        """Handle photo upload during creation"""
+        return Mugshot.objects.create(**validated_data)
+    
+    def update(self, instance, validated_data):
+        """Handle photo upload during update"""
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        return instance
+
 
 
 
@@ -61,3 +75,26 @@ class GallerySerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Video is required when media type is 'video'.")
         
         return data
+
+class HomepageSlideSerializer(serializers.ModelSerializer):
+    image_url = serializers.ReadOnlyField()
+    optimized_image_url = serializers.ReadOnlyField()
+    
+    class Meta:
+        model = HomepageSlide
+        fields = [
+            'id', 'title', 'description', 'image', 'image_url', 
+            'optimized_image_url', 'order', 'is_active', 'created_at'
+        ]
+        read_only_fields = ['image_url', 'optimized_image_url', 'created_at']
+    
+    def create(self, validated_data):
+        """Handle image upload during creation"""
+        return HomepageSlide.objects.create(**validated_data)
+    
+    def update(self, instance, validated_data):
+        """Handle image upload during update"""
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        return instance

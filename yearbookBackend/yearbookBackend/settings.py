@@ -61,6 +61,7 @@ cloudinary.config(
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -111,11 +112,11 @@ WSGI_APPLICATION = 'yearbookBackend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '2K25Yearbook',            
+        'NAME': 'railway',            
         'USER': 'postgres',           
         'PASSWORD': os.getenv('POSTGRES_PASSWORD'), 
-        'HOST': 'localhost',            
-        'PORT': '5432',                 
+        'HOST': 'shuttle.proxy.rlwy.net',            
+        'PORT': '44938',                 
     }
 }
 

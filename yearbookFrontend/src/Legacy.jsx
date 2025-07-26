@@ -215,7 +215,7 @@ export default function YearbookPage() {
       {/* Main Content */}
       <main className="container mx-auto py-12 px-4">
         {filteredStudents.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-6">
             {filteredStudents.map((student, index) => {
               const setCardRef = el => {
                 if (el) {

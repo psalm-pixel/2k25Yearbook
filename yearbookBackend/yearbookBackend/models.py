@@ -24,29 +24,37 @@ class Students(models.Model):
     def __str__(self):
         return self.name
 
-class PrefectQuote(models.Model):
-    # Foreign key to link to the existing student
-    student = models.ForeignKey(Students, on_delete=models.CASCADE, related_name='prefect_quotes')
-    role = models.CharField(max_length=100)  # e.g., "Head Prefect", "Sports Prefect", etc.
-    quote = models.TextField()
+    
+
+class Mugshot(models.Model):
+    name = models.CharField(max_length=100)
+    photo = CloudinaryField('mugshots', folder="yearbook/mugshots")
+    created_at = models.DateTimeField(auto_now_add=True)
     
     class Meta:
-        verbose_name = "Prefect Quote"
-        verbose_name_plural = "Prefect Quotes"
+        db_table = 'yearbookBackend_mugshots'  # Use existing plural table name
+        verbose_name = "Student Photo"
+        verbose_name_plural = "Student Photos"
+        ordering = ['name']
     
     def __str__(self):
-        return f"{self.student.name} - {self.role}"
+        return self.name
     
     @property
-    def student_name(self):
-        """Easy access to student name"""
-        return self.student.name
+    def photo_url(self):
+        """Get the photo URL"""
+        if self.photo:
+            return str(self.photo.url)
+        return None
     
     @property
-    def student_image(self):
-        """Easy access to student image"""
-        return self.student.image
-    
+    def thumbnail_url(self):
+        """Get thumbnail URL for the photo"""
+        if self.photo:
+            return CloudinaryImage(str(self.photo)).build_url(
+                width=300, height=400, crop='fill', quality='auto'
+            )
+        return None
 
 class Gallery(models.Model):
     MEDIA_TYPE_CHOICES = [
@@ -100,5 +108,38 @@ class Gallery(models.Model):
             return CloudinaryImage(str(self.video)).build_url(
                 resource_type='video', format='jpg',  # Force an image format
                 width=300, height=400, crop='fill', start_offset='auto'
+            )
+        return None
+
+class HomepageSlide(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    # Cloudinary field for image uploads
+    image = CloudinaryField('slideshow', folder="yearbook/slideshow")
+    order = models.PositiveIntegerField(default=0, help_text="Order of appearance in slideshow")
+    is_active = models.BooleanField(default=True, help_text="Whether this slide is shown")
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        verbose_name = "Homepage Slide"
+        verbose_name_plural = "Homepage Slides"
+        ordering = ['order', 'created_at']
+    
+    def __str__(self):
+        return self.title
+    
+    @property
+    def image_url(self):
+        """Get the image URL"""
+        if self.image:
+            return str(self.image.url)
+        return None
+    
+    @property
+    def optimized_image_url(self):
+        """Get optimized image URL for slideshow"""
+        if self.image:
+            return CloudinaryImage(str(self.image)).build_url(
+                width=1200, height=600, crop='fill', quality='auto', format='auto'
             )
         return None

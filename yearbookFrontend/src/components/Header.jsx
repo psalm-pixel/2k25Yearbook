@@ -14,19 +14,15 @@ export default function Header() {
      const menuItems = [
     {
       name: 'The Legacy',
-      href: '/Legacy',
+      href: '/legacy',
     },
     {
       name: 'Memories',
       href: '/memories',
     },
     {
-      name: 'Superlatives',
-      href: '#',
-    },
-    {
-      name: 'Chronicles',
-      href: '#',
+      name: 'Mugshots',
+      href: '/mugshots',
     },
   ];
 
@@ -58,43 +54,17 @@ export default function Header() {
         </div>
         <nav className="flex justify-between items-center space-x-4 ">
             <ul className="hidden md:flex space-x-4">
-              <li>
-                <Link
-                 to="/Legacy"
-                  className="text-[#2C3E50] font-medium text-nowrap no-underline relative group"
-                >
-                  The Legacy
-                  <span className="absolute left-0 right-0  h-[0.129rem] rounded mt-[21px] bg-[#7FB3A7]  transform scale-x-0 group-hover:scale-x-100 transition-transform duration-250 ease-in-out"></span>
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  to="/memories"
-                  className="text-[#2C3E50] font-medium  no-underline relative group"
-                >
-                  Memories 
-                  <span className="absolute left-0 right-0  h-[0.129rem] rounded mt-[21px] bg-[#7FB3A7]  transform scale-x-0 group-hover:scale-x-100 transition-transform duration-250 ease-in-out"></span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="#services"
-                  className="text-[#2C3E50] font-medium  no-underline relative group"
-                >
-                  Superlatives 
-                  <span className="absolute left-0 right-0  h-[0.129rem] rounded mt-[21px] bg-[#7FB3A7]  transform scale-x-0 group-hover:scale-x-100 transition-transform duration-250 ease-in-out"></span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="#contact"
-                  className="text-[#2C3E50] font-medium no-underline relative group"
-                >
-                  Mugshots
-                  <span className="absolute left-0 right-0  h-[0.129rem] rounded mt-[21px] bg-[#7FB3A7]  transform scale-x-0 group-hover:scale-x-100 transition-transform duration-250 ease-in-out"></span>
-                </Link>
-              </li>
+              {menuItems.map((item, index) => (
+                <li key={index}>
+                  <Link
+                    to={item.href}
+                    className="text-[#2C3E50] font-medium text-nowrap no-underline relative group"
+                  >
+                    {item.name}
+                    <span className="absolute left-0 right-0  h-[0.129rem] rounded mt-[21px] bg-[#7FB3A7]  transform scale-x-0 group-hover:scale-x-100 transition-transform duration-250 ease-in-out"></span>
+                  </Link>
+                </li>
+              ))}
             </ul>
              {isOpen && (
         <div className="md:hidden">

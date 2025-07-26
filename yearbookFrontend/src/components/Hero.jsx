@@ -39,7 +39,7 @@ export default function Hero() {
             isLoaded ? 'scale-100 opacity-70' : 'scale-110 opacity-0'
           }`}
           style={{ 
-            backgroundImage: "url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')",
+            backgroundImage: "url('https://res.cloudinary.com/dpgi1ujrb/image/upload/v1753488012/yearbook/slideshow/biec7xohu9qaht7kie4a.jpg')",
             transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`
           }}
         ></div>
@@ -150,9 +150,10 @@ export default function Hero() {
             <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </button>
           
-          <button className="group px-8 py-4 border-2 border-white/30 rounded-full text-white font-semibold text-lg backdrop-blur-sm hover:bg-white/10 transition-all duration-300 hover:scale-105 hover:border-emerald-400/50">
+        <Link to='/memories'><button className="group px-8 py-4 border-2 border-white/30 rounded-full text-white font-semibold text-lg backdrop-blur-sm hover:bg-white/10 transition-all duration-300 hover:scale-105 hover:border-emerald-400/50">
             View Gallery 
           </button>
+          </Link>
         </div>
 
         {/* Bottom Decorative Element */}
