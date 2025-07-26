@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Camera } from 'lucide-react';
+import { API_ENDPOINTS } from '../config/api';
 
 export default function MemoriesSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -31,9 +32,10 @@ export default function MemoriesSlider() {
   // Fetch slides from API
   useEffect(() => {
     const fetchSlides = async () => {
+      const apiUrl = API_ENDPOINTS.homepageSlides + 'active_slides/';
       try {
         setLoading(true);
-        const response = await fetch('https://2k25yearbook-production.up.railway.app/homepage-slides/active_slides/');
+        const response = await fetch(apiUrl);
         
         if (!response.ok) {
           throw new Error('Failed to fetch slides');
@@ -282,8 +284,8 @@ export default function MemoriesSlider() {
             <div key={index} className="relative bg-gradient-to-br from-gray-900/90 via-slate-800/90 to-gray-900/90 backdrop-blur-xl rounded-2xl overflow-hidden shadow-2xl border border-white/10">
               <div className="relative h-64 overflow-hidden">
                 <img
-                  src={image.image_url}
-                  alt={image.alt_text}
+                  src={image.optimized_image_url || image.image_url}
+                  alt={image.alt_text || image.title}
                   className="w-full h-full object-cover object-center"
                   draggable={false}
                 />
@@ -327,8 +329,8 @@ export default function MemoriesSlider() {
               {images.map((image, index) => (
                 <div key={index} className="min-w-full h-full flex-shrink-0 relative">
                   <img
-                    src={image.image_url}
-                    alt={image.alt_text}
+                    src={image.optimized_image_url || image.image_url}
+                    alt={image.alt_text || image.title}
                     className="w-full h-full object-cover object-center"
                     draggable={false}
                   />
@@ -396,7 +398,7 @@ export default function MemoriesSlider() {
                     }`}
                   >
                     <img
-                      src={image.image_url}
+                      src={image.optimized_image_url || image.image_url}
                       alt={`Memory ${index + 1}`}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                       draggable={false}
