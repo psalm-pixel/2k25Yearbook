@@ -16,7 +16,7 @@ export default function YearbookPage() {
 
   // Fetch students from API
   useEffect(() => {
-    fetch('http://localhost:8000/students/')
+    fetch('https://2k25yearbook-production.up.railway.app/students/')
       .then(response => response.json())
       .then(data => {
         const studentsData = data.results;

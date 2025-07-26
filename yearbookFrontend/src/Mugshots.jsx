@@ -17,7 +17,7 @@ const YearbookMugshots = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await fetch('http://localhost:8000/mugshot/'); // Fixed endpoint
+        const response = await fetch('https://2k25yearbook-production.up.railway.app/mugshot/'); // Fixed endpoint
         if (!response.ok) {
           throw new Error('Failed to fetch mugshots');
         }

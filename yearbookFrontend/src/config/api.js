@@ -1,5 +1,5 @@
 // API Configuration
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://2k25yearbook-production.up.railway.app';
 
 export const API_ENDPOINTS = {
   students: `${API_BASE_URL}/students/`,

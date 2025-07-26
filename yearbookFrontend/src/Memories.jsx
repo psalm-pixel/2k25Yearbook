@@ -22,7 +22,7 @@ const YearbookGallery = () => {
   const videoRef = useRef(null);
 
   // API configuration
-  const API_BASE_URL = 'http://localhost:8000';
+  const API_BASE_URL = 'https://2k25yearbook-production.up.railway.app';
   const GALLERY_ENDPOINT = `${API_BASE_URL}/gallery/`;
 
   // Fisher-Yates shuffle algorithm
